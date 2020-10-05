@@ -1,0 +1,376 @@
+/* RESET */
+html, body, div ,a, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video, label, input, textarea, select {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.3;
+  color: #333;
+  letter-spacing: 0;
+}
+
+body {
+  position: relative;
+  background: #d7d2ce url('../img/12_shop1_202909.jpg') no-repeat center bottom;
+  background-size: contain;
+  background-attachment: fixed;
+}
+
+body:before {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: -1;
+}
+
+body.active {
+  background: #fff;
+}
+
+body.active:before {
+  display: none;
+}
+
+.SearchArea {
+  position: relative;
+  max-width: 1600px;
+  padding: 0 15px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.SearchTxt {
+  margin-top: -55px;
+  padding-bottom: 50px;
+  font-size: 35px;
+  font-weight: 900; 
+  color: #fff;
+}
+
+.InputWrap {
+  display: flex;
+  width: 790px;
+  height: 70px;
+  padding: 0 0 0 30px;
+  background-color: #fff;
+  border-radius: 35px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); 
+	-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); 
+  -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box; 
+}
+
+.SearchInput {
+  width: 100%;
+  height: 70px;
+  background-color: transparent;
+  outline: none;
+  font-size: 25px;
+  color: #333;
+}
+
+.SearchBtn {
+  width: 80px;
+  height: 70px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.SearchBtn i {
+  font-size: 25px;
+  color: #333;
+}
+
+.active .SearchArea {
+  align-items: flex-start;
+  height: 230px;
+}
+
+.active .SearchArea .InputWrap {
+  width: 560px;
+  height: 50px;
+
+}
+
+.active .SearchArea .SearchInput {
+  height: 50px;
+  font-size: 20px;
+}
+
+.active .SearchArea .SearchBtn {
+  height: 50px;
+}
+
+.active .SearchArea .SearchTxt {
+  margin-top: 0;
+  padding-bottom: 15px;
+  font-size: 23px;
+  font-weight: 500;
+  text-indent: 10px;
+  color: #333;
+}
+
+.SearchResult {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.SearchResult ul {
+  display: none;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.SearchResult ul.on {
+  opacity: 1;
+}
+
+.SearchResult ul:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.SearchResult .item {
+  float: left;
+  width: calc(100% / 4);
+  padding: 15px;
+  box-sizing: border-box;
+  list-style: none;
+  transform: translate(-20px);
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+.SearchResult .item.on {
+  opacity: 1;
+}
+
+.SearchResult .inner {
+  position: relative;
+  background-color: #000;
+  font-size: 0;
+  overflow: hidden;
+  transition: all .3s ease;
+  cursor: pointer;
+}
+
+.SearchResult .item:hover .inner {
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
+	-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
+  -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-20px);
+}
+
+.SearchResult .imgWrap {
+  position: relative;
+  top: 0;
+  z-index: 2;
+}
+
+.SearchResult img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SearchResult em {
+  font-style: normal;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 80%;
+}
+
+.SearchResult ul.on .item {
+  transform: translateY(0);
+}
+
+.KeywordHistory {
+  margin: 20px 0 0;
+  max-width: 740px;
+}
+
+.KeywordHistory:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.KeywordHistory li {
+  float: left;
+  margin-left: 30px;
+  list-style: none;
+}
+
+.KeywordHistory li:first-child {
+  margin-left: 0 !important;
+}
+
+.KeywordHistory li button {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.KeywordHistory li button:hover {
+  text-decoration: underline;
+}
+
+.ImageInfo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.ImageInfo .content-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  padding: 40px 30px 30px;
+  box-sizing: border-box;
+}
+
+.ImageInfo button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.ImageInfo img {
+  width: 100%;
+}
+
+.ImageInfo p {
+  margin-top: 10px;
+}
+
+.Loading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,.5);
+  color: #000;
+  z-index: 3;
+}
+
+.Empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+}
+
+body.active .KeywordHistory {
+  padding: 0 20px;
+  width: 520px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+body.active .KeywordHistory li {
+  margin-left: 10px;
+}
+
+body.active .KeywordHistory li button {
+  color: #333;
+}
+
+@keyframes like {
+  from {
+      background-size: 25px auto;
+  } 
+  to {
+      background-size: 20px auto;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .SearchResult .item {
+    width: calc(100% / 3);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .SearchArea {
+    align-items: flex-start;
+    height: 200px;
+  }
+
+  .SearchTxt {
+    margin-top: 0;
+    padding-bottom: 15px;
+    font-size: 23px;
+    font-weight: 500;
+    text-indent: 10px;
+  }
+  .InputWrap {
+    max-width: 100%;
+    width: 560px;
+    height: 50px;
+  }
+
+  .SearchInput {
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .SearchBtn {
+    height: 50px;
+  }
+
+  .SearchResult .item {
+    width: calc(100% / 2);
+  }
+}
+
+@media screen and (max-width: 546px) {
+  .SearchResult .item {
+    width: calc(100% / 1);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .SearchTxt, .active .SearchArea .SearchTxt {
+    font-size: 19px;
+  }
+  body.active .KeywordHistory {
+    padding: 0;
+    width: 100%;
+  }
+  .KeywordHistory li, body.active .KeywordHistory li {
+    margin-left: 5px;
+  }
+}
