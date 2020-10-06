@@ -15,20 +15,8 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword, page) => {
-        const $wrap = document.querySelector('.SearchResult ul');
-        $wrap.classList.remove('on');
-        let self = this;
         this.loading.show();
-        async function dataResult() {
-          const result = await api.fetchData(keyword, page);
-          self.setState(result.photos.photo);
-          setTimeout(() => {
-            self.isoLayout($wrap);
-            $wrap.classList.add('on');
-            self.loading.hide();
-          }, 300);
-        }
-        dataResult();
+        this.fetchData({ keyword, page })
         this.searchInput.inputFocus(keyword);
       }
     });
@@ -46,21 +34,8 @@ class App {
         const keywordHistory = localStorage.getItem("keywordHistory") === null ? [] : localStorage.getItem("keywordHistory").split(",");
         const lastKeyword = keywordHistory[0];
         const page = this.page + 1;
-        let self = this;
         this.loading.show();
-        async function dataPaging() {
-          const nextResult = await api.fetchData(lastKeyword, page);
-          const $wrap = document.querySelector('.SearchResult ul');
-          let newData = self.data.concat(nextResult.photos.photo);
-          self.setState(newData);
-          setTimeout(() => {
-            self.isoLayout($wrap);
-            self.loading.hide();
-          }, 300);
-          self.page = page;
-          self.loading.hide();
-        }
-        dataPaging();
+        this.fetchNextData({ lastKeyword, page });
       }
     });
 
@@ -75,6 +50,28 @@ class App {
     this.loading = new Loading({
       $target
     });
+  }
+
+  async fetchData({ keyword, page }) {
+    const $wrap = document.querySelector('.SearchResult ul');
+    const result = await api.fetchData(keyword, page);
+    await this.setState(result.photos.photo);
+    await setTimeout(() => {
+      this.isoLayout($wrap);
+      this.loading.hide();
+    }, 500);
+  }
+
+  async fetchNextData({ keyword, page }) {
+    const $wrap = document.querySelector('.SearchResult ul');
+    const result = await api.fetchData(keyword, page);
+    let newData = this.data.concat(result.photos.photo);
+    await this.setState(newData);
+    await setTimeout(() => {
+      this.isoLayout($wrap);
+      this.page = page;
+      this.loading.hide();
+    }, 500);
   }
 
   isoLayout(target) {

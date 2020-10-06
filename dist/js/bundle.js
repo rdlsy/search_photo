@@ -10317,46 +10317,12 @@ var App = /*#__PURE__*/function () {
     this.searchInput = new _SearchInput_js__WEBPACK_IMPORTED_MODULE_1__["default"]({
       $target: $target,
       onSearch: function onSearch(keyword, page) {
-        var $wrap = document.querySelector('.SearchResult ul');
-        $wrap.classList.remove('on');
-        var self = _this;
-
         _this.loading.show();
 
-        function dataResult() {
-          return _dataResult.apply(this, arguments);
-        }
-
-        function _dataResult() {
-          _dataResult = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var result;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _context.next = 2;
-                    return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(keyword, page);
-
-                  case 2:
-                    result = _context.sent;
-                    self.setState(result.photos.photo);
-                    setTimeout(function () {
-                      self.isoLayout($wrap);
-                      $wrap.classList.add('on');
-                      self.loading.hide();
-                    }, 300);
-
-                  case 5:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee);
-          }));
-          return _dataResult.apply(this, arguments);
-        }
-
-        dataResult();
+        _this.fetchData({
+          keyword: keyword,
+          page: page
+        });
 
         _this.searchInput.inputFocus(keyword);
       }
@@ -10374,47 +10340,13 @@ var App = /*#__PURE__*/function () {
         var keywordHistory = localStorage.getItem("keywordHistory") === null ? [] : localStorage.getItem("keywordHistory").split(",");
         var lastKeyword = keywordHistory[0];
         var page = _this.page + 1;
-        var self = _this;
 
         _this.loading.show();
 
-        function dataPaging() {
-          return _dataPaging.apply(this, arguments);
-        }
-
-        function _dataPaging() {
-          _dataPaging = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var nextResult, $wrap, newData;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    _context2.next = 2;
-                    return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(lastKeyword, page);
-
-                  case 2:
-                    nextResult = _context2.sent;
-                    $wrap = document.querySelector('.SearchResult ul');
-                    newData = self.data.concat(nextResult.photos.photo);
-                    self.setState(newData);
-                    setTimeout(function () {
-                      self.isoLayout($wrap);
-                      self.loading.hide();
-                    }, 300);
-                    self.page = page;
-                    self.loading.hide();
-
-                  case 9:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2);
-          }));
-          return _dataPaging.apply(this, arguments);
-        }
-
-        dataPaging();
+        _this.fetchNextData({
+          lastKeyword: lastKeyword,
+          page: page
+        });
       }
     });
     this.imageInfo = new _ImageInfo_js__WEBPACK_IMPORTED_MODULE_3__["default"]({
@@ -10430,6 +10362,95 @@ var App = /*#__PURE__*/function () {
   }
 
   _createClass(App, [{
+    key: "fetchData",
+    value: function () {
+      var _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
+        var _this2 = this;
+
+        var keyword, page, $wrap, result;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                keyword = _ref.keyword, page = _ref.page;
+                $wrap = document.querySelector('.SearchResult ul');
+                _context.next = 4;
+                return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(keyword, page);
+
+              case 4:
+                result = _context.sent;
+                _context.next = 7;
+                return this.setState(result.photos.photo);
+
+              case 7:
+                _context.next = 9;
+                return setTimeout(function () {
+                  _this2.isoLayout($wrap);
+
+                  _this2.loading.hide();
+                }, 500);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function fetchData(_x) {
+        return _fetchData.apply(this, arguments);
+      }
+
+      return fetchData;
+    }()
+  }, {
+    key: "fetchNextData",
+    value: function () {
+      var _fetchNextData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref2) {
+        var _this3 = this;
+
+        var keyword, page, $wrap, result, newData;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                keyword = _ref2.keyword, page = _ref2.page;
+                $wrap = document.querySelector('.SearchResult ul');
+                _context2.next = 4;
+                return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(keyword, page);
+
+              case 4:
+                result = _context2.sent;
+                newData = this.data.concat(result.photos.photo);
+                _context2.next = 8;
+                return this.setState(newData);
+
+              case 8:
+                _context2.next = 10;
+                return setTimeout(function () {
+                  _this3.isoLayout($wrap);
+
+                  _this3.page = page;
+
+                  _this3.loading.hide();
+                }, 500);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function fetchNextData(_x2) {
+        return _fetchNextData.apply(this, arguments);
+      }
+
+      return fetchNextData;
+    }()
+  }, {
     key: "isoLayout",
     value: function isoLayout(target) {
       new Isotope(target, {
@@ -10938,18 +10959,7 @@ var SearchResult = /*#__PURE__*/function () {
       $target: $wrapper
     });
     this.render();
-  } // listObserver = new IntersectionObserver((items, observer) => {
-  //   items.forEach(item => {
-  //     if (item.isIntersecting) {
-  //       item.target.querySelector("img").src = item.target.querySelector("img").dataset.src;
-  //       let dataIndex = Number(item.target.dataset.index);
-  //       if (dataIndex + 1 === this.data.length) {
-  //         this.onScroll();
-  //       }
-  //     }
-  //   });
-  // });
-
+  }
 
   _createClass(SearchResult, [{
     key: "setState",
@@ -10980,7 +10990,7 @@ var SearchResult = /*#__PURE__*/function () {
         });
         setTimeout(function () {
           $item.classList.add('on');
-        }); //this.listObserver.observe($item);
+        }, 700);
       });
 
       window.onscroll = function () {

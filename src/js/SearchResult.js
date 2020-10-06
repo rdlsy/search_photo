@@ -27,18 +27,6 @@ class SearchResult {
     this.render();
   }
 
-  // listObserver = new IntersectionObserver((items, observer) => {
-  //   items.forEach(item => {
-  //     if (item.isIntersecting) {
-  //       item.target.querySelector("img").src = item.target.querySelector("img").dataset.src;
-  //       let dataIndex = Number(item.target.dataset.index);
-  //       if (dataIndex + 1 === this.data.length) {
-  //         this.onScroll();
-  //       }
-  //     }
-  //   });
-  // });
-
   setState(nextData) {
     this.data = nextData;
     this.render();
@@ -73,9 +61,7 @@ class SearchResult {
 
       setTimeout(() => {
         $item.classList.add('on');
-      });
-
-      //this.listObserver.observe($item);
+      }, 700);
     });
 
     window.onscroll = () => {

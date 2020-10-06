@@ -129,14 +129,7 @@ body.active:before {
 
 .SearchResult ul {
   display: none;
-  opacity: 0;
-  transition: all 0.3s;
 }
-
-.SearchResult ul.on {
-  opacity: 1;
-}
-
 .SearchResult ul:after {
   content: '';
   display: block;
