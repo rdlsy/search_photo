@@ -10319,6 +10319,8 @@ var App = /*#__PURE__*/function () {
       onSearch: function onSearch(keyword, page) {
         _this.loading.show();
 
+        var self = _this;
+
         _this.fetchData({
           keyword: keyword,
           page: page
@@ -10365,8 +10367,6 @@ var App = /*#__PURE__*/function () {
     key: "fetchData",
     value: function () {
       var _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
-        var _this2 = this;
-
         var keyword, page, $wrap, result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -10379,18 +10379,15 @@ var App = /*#__PURE__*/function () {
 
               case 4:
                 result = _context.sent;
-                _context.next = 7;
-                return this.setState(result.photos.photo);
+                this.setState(result.photos.photo);
+                _context.next = 8;
+                return this.sleep(500);
 
-              case 7:
-                _context.next = 9;
-                return setTimeout(function () {
-                  _this2.isoLayout($wrap);
+              case 8:
+                this.isoLayout($wrap);
+                this.loading.hide();
 
-                  _this2.loading.hide();
-                }, 500);
-
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -10408,8 +10405,6 @@ var App = /*#__PURE__*/function () {
     key: "fetchNextData",
     value: function () {
       var _fetchNextData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref2) {
-        var _this3 = this;
-
         var keyword, page, $wrap, result, newData;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -10423,20 +10418,16 @@ var App = /*#__PURE__*/function () {
               case 4:
                 result = _context2.sent;
                 newData = this.data.concat(result.photos.photo);
-                _context2.next = 8;
-                return this.setState(newData);
+                this.setState(newData);
+                _context2.next = 9;
+                return this.sleep(500);
 
-              case 8:
-                _context2.next = 10;
-                return setTimeout(function () {
-                  _this3.isoLayout($wrap);
+              case 9:
+                this.isoLayout($wrap);
+                this.page = page;
+                this.loading.hide();
 
-                  _this3.page = page;
-
-                  _this3.loading.hide();
-                }, 500);
-
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -10450,6 +10441,13 @@ var App = /*#__PURE__*/function () {
 
       return fetchNextData;
     }()
+  }, {
+    key: "sleep",
+    value: function sleep(ms) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, ms);
+      });
+    }
   }, {
     key: "isoLayout",
     value: function isoLayout(target) {

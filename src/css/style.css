@@ -142,13 +142,14 @@ body.active:before {
   padding: 15px;
   box-sizing: border-box;
   list-style: none;
-  transform: translate(-20px);
+  transform: translateY(-20px);
   opacity: 0;
   transition: all .5s ease;
 }
 
 .SearchResult .item.on {
   opacity: 1;
+  transform: translateY(0);
 }
 
 .SearchResult .inner {
