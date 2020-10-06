@@ -10877,9 +10877,9 @@ var SearchInput = /*#__PURE__*/function () {
         alert('검색어를 입력해주세요');
         return;
       } else {
-        onSearch(e.target.value, 1);
+        onSearch($searchInput.value, 1);
 
-        _this.keywordHistory.addKeyword(e.target.value, 1);
+        _this.keywordHistory.addKeyword($searchInput.value, 1);
       }
     });
     $searchInput.addEventListener('click', function () {

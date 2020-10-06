@@ -51,8 +51,8 @@ class SearchInput {
         alert('검색어를 입력해주세요');
         return;
       } else {
-        onSearch(e.target.value, 1);
-        this.keywordHistory.addKeyword(e.target.value, 1);
+        onSearch($searchInput.value, 1);
+        this.keywordHistory.addKeyword($searchInput.value, 1);
       }
     });
 
