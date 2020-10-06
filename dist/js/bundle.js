@@ -10319,8 +10319,6 @@ var App = /*#__PURE__*/function () {
       onSearch: function onSearch(keyword, page) {
         _this.loading.show();
 
-        var self = _this;
-
         _this.fetchData({
           keyword: keyword,
           page: page

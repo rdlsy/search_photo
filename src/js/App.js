@@ -16,7 +16,6 @@ class App {
       $target,
       onSearch: (keyword, page) => {
         this.loading.show();
-        let self = this;
         this.fetchData({ keyword, page });
         this.searchInput.inputFocus(keyword);
       }
@@ -56,11 +55,8 @@ class App {
   async fetchData({ keyword, page }) {
     const $wrap = document.querySelector('.SearchResult ul');
     const result = await api.fetchData(keyword, page);
-
     this.setState(result.photos.photo);
-
     await this.sleep(500);
-
     this.isoLayout($wrap);
     this.loading.hide();
   }
@@ -69,11 +65,8 @@ class App {
     const $wrap = document.querySelector('.SearchResult ul');
     const result = await api.fetchData(keyword, page);
     let newData = this.data.concat(result.photos.photo);
-
     this.setState(newData);
-
     await this.sleep(500);
-
     this.isoLayout($wrap);
     this.page = page;
     this.loading.hide();
