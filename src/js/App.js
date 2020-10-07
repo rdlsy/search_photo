@@ -32,10 +32,10 @@ class App {
       },
       onScroll: () => {
         const keywordHistory = localStorage.getItem("keywordHistory") === null ? [] : localStorage.getItem("keywordHistory").split(",");
-        const lastKeyword = keywordHistory[0];
+        const keyword = keywordHistory[0];
         const page = this.page + 1;
         this.loading.show();
-        this.fetchNextData({ lastKeyword, page });
+        this.fetchNextData({ keyword, page });
       }
     });
 
@@ -53,29 +53,28 @@ class App {
   }
 
   async fetchData({ keyword, page }) {
-    const $wrap = document.querySelector('.SearchResult ul');
     const result = await api.fetchData(keyword, page);
     this.setState(result.photos.photo);
-    await this.sleep(500);
-    this.isoLayout($wrap);
+    setTimeout(() => {
+      this.layout();
+    }, 500);
     this.loading.hide();
   }
 
   async fetchNextData({ keyword, page }) {
-    const $wrap = document.querySelector('.SearchResult ul');
     const result = await api.fetchData(keyword, page);
     let newData = this.data.concat(result.photos.photo);
     this.setState(newData);
-    await this.sleep(500);
-    this.isoLayout($wrap);
+    setTimeout(() => {
+      this.layout();
+    }, 500);
     this.page = page;
     this.loading.hide();
   }
 
-  sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
+  layout() {
+    const $wrap = document.querySelector('.SearchResult ul');
+    this.isoLayout($wrap);
   }
 
   isoLayout(target) {

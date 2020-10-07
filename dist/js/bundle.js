@@ -10338,13 +10338,13 @@ var App = /*#__PURE__*/function () {
       },
       onScroll: function onScroll() {
         var keywordHistory = localStorage.getItem("keywordHistory") === null ? [] : localStorage.getItem("keywordHistory").split(",");
-        var lastKeyword = keywordHistory[0];
+        var keyword = keywordHistory[0];
         var page = _this.page + 1;
 
         _this.loading.show();
 
         _this.fetchNextData({
-          lastKeyword: lastKeyword,
+          keyword: keyword,
           page: page
         });
       }
@@ -10365,27 +10365,26 @@ var App = /*#__PURE__*/function () {
     key: "fetchData",
     value: function () {
       var _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
-        var keyword, page, $wrap, result;
+        var _this2 = this;
+
+        var keyword, page, result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 keyword = _ref.keyword, page = _ref.page;
-                $wrap = document.querySelector('.SearchResult ul');
-                _context.next = 4;
+                _context.next = 3;
                 return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(keyword, page);
 
-              case 4:
+              case 3:
                 result = _context.sent;
                 this.setState(result.photos.photo);
-                _context.next = 8;
-                return this.sleep(500);
-
-              case 8:
-                this.isoLayout($wrap);
+                setTimeout(function () {
+                  _this2.layout();
+                }, 500);
                 this.loading.hide();
 
-              case 10:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -10403,29 +10402,28 @@ var App = /*#__PURE__*/function () {
     key: "fetchNextData",
     value: function () {
       var _fetchNextData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref2) {
-        var keyword, page, $wrap, result, newData;
+        var _this3 = this;
+
+        var keyword, page, result, newData;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 keyword = _ref2.keyword, page = _ref2.page;
-                $wrap = document.querySelector('.SearchResult ul');
-                _context2.next = 4;
+                _context2.next = 3;
                 return _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchData(keyword, page);
 
-              case 4:
+              case 3:
                 result = _context2.sent;
                 newData = this.data.concat(result.photos.photo);
                 this.setState(newData);
-                _context2.next = 9;
-                return this.sleep(500);
-
-              case 9:
-                this.isoLayout($wrap);
+                setTimeout(function () {
+                  _this3.layout();
+                }, 500);
                 this.page = page;
                 this.loading.hide();
 
-              case 12:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -10440,11 +10438,10 @@ var App = /*#__PURE__*/function () {
       return fetchNextData;
     }()
   }, {
-    key: "sleep",
-    value: function sleep(ms) {
-      return new Promise(function (resolve) {
-        setTimeout(resolve, ms);
-      });
+    key: "layout",
+    value: function layout() {
+      var $wrap = document.querySelector('.SearchResult ul');
+      this.isoLayout($wrap);
     }
   }, {
     key: "isoLayout",

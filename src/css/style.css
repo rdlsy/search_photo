@@ -302,15 +302,6 @@ body.active .KeywordHistory li button {
   color: #333;
 }
 
-@keyframes like {
-  from {
-      background-size: 25px auto;
-  } 
-  to {
-      background-size: 20px auto;
-  }
-}
-
 @media screen and (max-width: 992px) {
   .SearchResult .item {
     width: calc(100% / 3);
@@ -347,6 +338,10 @@ body.active .KeywordHistory li button {
 
   .SearchResult .item {
     width: calc(100% / 2);
+  }
+
+  .SearchResult .item:hover .inner {
+    transform: none;
   }
 }
 
